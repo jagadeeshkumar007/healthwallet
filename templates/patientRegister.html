@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Form</title>
+</head>
+<script>
+    function isValidMobileNumber(mobileNumber) {
+        // Remove any non-numeric characters
+        var cleanedNumber = mobileNumber.replace(/\D/g, '');
+
+        // Check if the cleaned number is a valid format
+        // In this example, we are checking for a 10-digit number
+        if (/^\d{10}$/.test(cleanedNumber)) {
+            // Additional checks can be added based on specific requirements
+            return true;
+        }
+
+        return false;
+    }
+
+    // Example usage
+
+    function isValidEmail(email) {
+        // Regular expression for basic email validation
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    function validate() {
+        var hmail = document.getElementById("email").value;
+        var frm = document.getElementById("frm");
+        var hn = document.getElementById("phno").value;
+        if (hn.length == 10) {
+            if (isValidEmail(hmail)) { frm.submit(); }
+            else {
+                alert("invalid email id");
+            }
+
+        }
+        else {
+            alert("invalid phone number");
+        }
+
+
+    }
+
+    // Example usage
+
+</script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #35b0e9;; /* Background color - yellow */
+        color: #023e73; /* Text color - dark blue */
+    }
+
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #f3f3f3; /* Form box background color - light gray */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        color: #023e73; /* Text color inside the form box - dark blue */
+    }
+
+    h2 {
+        color: white;
+        background-color: #023e73; /* Form title color - dark blue */
+        text-align: center;
+        padding: 20px;
+        margin-top: 0%;
+        border-radius: 5px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        box-sizing: border-box;
+        background-color: #d6dfe7; /* Input box color - light gray */
+        border: none;
+        border-radius: 5px;
+        color: #023e73; /* Input text color - dark blue */
+    }
+
+    input[type="submit"], button {
+        background-color: #023e73; /* Button color - dark blue */
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #001f3f; /* Button color on hover - darker blue */
+    }
+    
+</style>
+<body>
+    <form action="patientRegister" method="post" id="frm">
+        {% csrf_token %}
+        <h2>User Registration: </h2>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li style="color: red;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <label for="adhno" id="frm">Adhno:</label><br>
+        <input type="number" id="adhno" name="adhno" maxlength="12"><br>
+
+        <label for="pname">Name:</label><br>
+        <input type="text" id="pname" name="pname" maxlength="500"><br>
+
+        <label for="pincode">Pincode:</label><br>
+        <input type="number" id="pincode" name="pincode" maxlength="6"><br>
+
+        <label for="state">State:</label><br>
+        <input type="text" id="state" name="state" maxlength="50"><br>
+
+        <label for="dist">District:</label><br>
+        <input type="text" id="dist" name="dist" maxlength="60"><br>
+
+        <label for="Address">Address:</label><br>
+        <input type="text" id="Address" name="Address" maxlength="100"><br>
+
+        <label for="gender">Gender:</label><br>
+        <input type="text" id="gender" name="gender" maxlength="20"><br>
+
+        <label for="dob">Date of Birth:</label><br>
+        <input type="date" id="dob" name="dob" maxlength="15"><br>
+
+        <label for="diab">Diabetes:</label><br>
+        <input type="text" id="diab" name="diab" maxlength="10"><br>
+
+        <label for="bp">Blood Pressure:</label><br>
+        <input type="text" id="bp" name="bp" maxlength="10"><br>
+
+        <label for="weight">Weight:</label><br>
+        <input type="text" id="weight" name="weight" maxlength="10"><br>
+
+        <label for="height">Height:</label><br>
+        <input type="text" id="height" name="height" maxlength="10"><br>
+
+        <label for="phno">Phone Number:</label><br>
+        <input type="text" id="phno" name="phno" maxlength="20"><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" maxlength="100"><br>
+
+        <label for="pswd">Password:</label><br>
+        <input type="password" id="pswd" name="pswd" maxlength="500"><br>
+
+        <label for="pswd">ConfirmPassword:</label><br>
+        <input type="password" id="cpswd" name="cpswd" maxlength="500"><br>
+
+        <div onclick="validate()">Submit</div>
+    </form>
+</body>
+
+</html>

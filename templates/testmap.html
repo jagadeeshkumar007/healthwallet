@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebUSB Fingerprint Scanner Demo</title>
+</head>
+
+<body>
+    <button id="connectButton">Connect to Fingerprint Scanner</button>
+    <script>
+        let device;
+
+        async function connectToFingerprintScanner() {
+            try {
+                device = await navigator.usb.requestDevice({ filters: [{ vendorId: 0xABCD, productId: 0x1234 }] });
+                console.log('Device:', device);
+                await device.open();
+                await device.selectConfiguration(1); // Select configuration (if needed)
+                await device.claimInterface(0); // Claim the interface (typically interface 0 for HID devices)
+                console.log('Connected to fingerprint scanner');
+
+                // Start listening for input from the fingerprint scanner
+                await device.transferIn(1, 64); // Endpoint 1, 64 bytes (adjust as per your device)
+                device.addEventListener('inputreport', handleInputReport);
+            } catch (error) {
+                console.error('Failed to connect to fingerprint scanner:', error);
+            }
+        }
+
+        function handleInputReport(event) {
+            const data = new Uint8Array(event.data.buffer);
+            // Process data from the fingerprint scanner
+            console.log('Received data from fingerprint scanner:', data);
+        }
+
+        document.getElementById('connectButton').addEventListener('click', connectToFingerprintScanner);
+    </script>
+</body>
+
+</html>

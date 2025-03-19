@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<<<<<<< HEAD
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Medical Record Form</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .border-radius {
+                border-radius: 15px;
+            }
+
+            label {
+                color: rgb(15, 15, 129);
+                font-size: 1.5rem;
+                font-weight: 500;
+            }
+
+            .bg-color {
+                background-color: rgb(15, 15, 129);
+            }
+
+            .bg-white {
+                background-color: white;
+            }
+
+            .input-bg {
+                background-color: #e9ecef !important;
+            }
+        </style>
+    </head>
+
+    <body class="bg-primary">
+        <div class="container-fluid">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-6">
+                    <div class="container shadow pt-4 border-radius bg-white">
+                        <h2 class="text-center bg-color text-light p-3">Medical Record Form</h2>
+                        <form method="post" action="storeDetails" class="needs-validation pl-2" novalidate>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="date">Date:</label>
+                                <input type="date" class="form-control input-bg" id="date" name="date" maxlength="50"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="disease">Disease:</label>
+                                <input type="text" class="form-control input-bg" id="disease" name="disease"
+                                    maxlength="400" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="diagnosis">Diagnosis:</label>
+                                <input type="text" class="form-control input-bg" id="diagnosis" name="diagnosis"
+                                    maxlength="500" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="remarks">Remarks:</label>
+                                <textarea class="form-control input-bg" id="remarks" name="remarks" rows="4" cols="50"
+                                    maxlength="500" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="adhno">Adhno:</label>
+                                <input type="text" class="form-control input-bg" id="adhno" name="adhno" maxlength="12"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hid">Hospital ID:</label>
+                                <input type="text" class="form-control input-bg" id="hid" name="hid" maxlength="50"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hname">Hospital Name:</label>
+                                <input type="text" class="form-control input-bg" id="hname" name="hname" maxlength="50"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dname">Doctor Name:</label>
+                                <input type="text" class="form-control input-bg" id="dname" name="dname" maxlength="50"
+                                    required>
+                            </div>
+
+                            <input type="hidden" name="dm1" id="dm1" value="1">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>SNO</th>
+                                        <th>Medicine Name</th>
+                                        <th>Time</th>
+                                        <th>Eat</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tb1">
+                                    <tr>
+                                        <td>1.</td>
+                                        <td><input type="text" name="m1" class="form-control input-bg"></td>
+                                        <td><input type="text" name="t1" class="form-control input-bg"></td>
+                                        <td><input type="text" name="e1" class="form-control input-bg"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-primary m-2" onclick="addpres()">Add</button>
+
+                            <input type="hidden" name="dm2" id="dm2" value="1">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>SNO</th>
+                                        <th>PDF Name</th>
+                                        <th>File</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tb2">
+                                    <tr>
+                                        <td>1.</td>
+                                        <td><input type="text" name="pdfname1" class="form-control input-bg"></td>
+                                        <td><input type="file" name="pdf1" class="form-control-file input-bg"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-primary m-3" onclick="addpdf()">Add</button>
+
+                            <input type="submit" class="btn btn-success" value="Submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script>
+            function addpres() {
+                var dm1 = document.getElementById('dm1');
+                var n = parseInt(dm1.value);
+                var tb1 = document.getElementById('tb1');
+                var tr = document.createElement("tr");
+                var td1 = document.createElement("td");
+                var td2 = document.createElement("td");
+                var td3 = document.createElement("td");
+                var td4 = document.createElement("td");
+                td1.innerHTML = n + 1;
+                var inp1 = document.createElement("input");
+                var inp2 = document.createElement("input");
+                var inp3 = document.createElement("input");
+                n++;
+                dm1.setAttribute("value", n);
+                inp1.setAttribute("name", "m" + n);
+                inp2.setAttribute("name", "t" + n);
+                inp3.setAttribute("name", "e" + n);
+                inp1.setAttribute("class", "form-control input-bg");
+                inp2.setAttribute("class", "form-control input-bg");
+                inp3.setAttribute("class", "form-control input-bg");
+
+                tb1.append(tr);
+                tr.append(td1);
+                tr.append(td2);
+                tr.append(td3);
+                tr.append(td4);
+                td2.append(inp1);
+                td3.append(inp2);
+                td4.append(inp3);
+            }
+
+            function addpdf() {
+                var dm2 = document.getElementById('dm2');
+                var n = parseInt(dm2.value);
+                var tb1 = document.getElementById('tb2');
+                var tr = document.createElement("tr");
+                var td1 = document.createElement("td");
+                var td2 = document.createElement("td");
+                var td3 = document.createElement("td");
+                td1.innerHTML = n + 1;
+                var inp1 = document.createElement("input");
+                var inp2 = document.createElement("input");
+                inp2.setAttribute('type', "file");
+                n++;
+                dm2.setAttribute("value", n);
+                inp1.setAttribute("name", "pdfname" + n);
+                inp2.setAttribute("name", "pdf" + n);
+                inp1.setAttribute("class", "form-control input-bg");
+                inp2.setAttribute("class", "form-control-file input-bg");
+
+                tb1.append(tr);
+                tr.append(td1);
+                tr.append(td2);
+                tr.append(td3);
+                td2.append(inp1);
+                td3.append(inp2);
+            }
+        </script>
+    </body>
+=======
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Record Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .border-radius {
+            border-radius: 15px;
+        }
+
+        label {
+            color: rgb(15, 15, 129);
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .bg-color {
+            background-color: rgb(15, 15, 129);
+        }
+
+        .bg-white {
+            background-color: white;
+        }
+        .input-bg {
+            background-color: #e9ecef!important; 
+        }
+       
+    </style>
+</head>
+
+<body class="bg-primary">
+    <div class="container-fluid">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="container shadow pt-4 border-radius bg-white">
+                    <h2 class="text-center bg-color text-light p-3">Medical Record Form</h2>
+                    <form method="post" action="storeDetails" class="needs-validation pl-2" novalidate>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="date">Date:</label>
+                            <input type="date" class="form-control input-bg" id="date" name="date" maxlength="50" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="disease">Disease:</label>
+                            <input type="text" class="form-control input-bg" id="disease" name="disease" maxlength="400" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="diagnosis">Diagnosis:</label>
+                            <input type="text" class="form-control input-bg" id="diagnosis" name="diagnosis" maxlength="500" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="remarks">Remarks:</label>
+                            <textarea class="form-control input-bg" id="remarks" name="remarks" rows="4" cols="50" maxlength="500" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adhno">Adhno:</label>
+                            <input type="text" class="form-control input-bg" id="adhno" name="adhno" maxlength="12" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hid">Hospital ID:</label>
+                            <input type="text" class="form-control input-bg" id="hid" name="hid" maxlength="50" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hname">Hospital Name:</label>
+                            <input type="text" class="form-control input-bg" id="hname" name="hname" maxlength="50" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dname">Doctor Name:</label>
+                            <input type="text" class="form-control input-bg" id="dname" name="dname" maxlength="50" required>
+                        </div>
+
+                        <input type="hidden" name="dm1" id="dm1" value="1">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>SNO</th>
+                                    <th>Medicine Name</th>
+                                    <th>Time</th>
+                                    <th>Eat</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tb1">
+                                <tr>
+                                    <td>1.</td>
+                                    <td><input type="text" name="m1" class="form-control input-bg"></td>
+                                    <td><input type="text" name="t1" class="form-control input-bg"></td>
+                                    <td><input type="text" name="e1" class="form-control input-bg"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-primary m-2" onclick="addpres()">Add</button>
+
+                        <input type="hidden" name="dm2" id="dm2" value="1">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>SNO</th>
+                                    <th>PDF Name</th>
+                                    <th>File</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tb2">
+                                <tr>
+                                    <td>1.</td>
+                                    <td><input type="text" name="pdfname1" class="form-control input-bg"></td>
+                                    <td><input type="file" name="pdf1" class="form-control-file input-bg"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-primary m-3" onclick="addpdf()">Add</button>
+
+                        <input type="submit" class="btn btn-success" value="Submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function addpres(){
+            var dm1= document.getElementById('dm1');
+            var n=parseInt(dm1.value);
+            var tb1= document.getElementById('tb1');
+            var tr=document.createElement("tr");
+            var td1=document.createElement("td");
+            var td2=document.createElement("td");
+            var td3=document.createElement("td");
+            var td4 = document.createElement("td");
+            td1.innerHTML=n+1;
+            var inp1=document.createElement("input");
+            var inp2=document.createElement("input");
+            var inp3 = document.createElement("input");
+            n++;
+            dm1.setAttribute("value",n);
+            inp1.setAttribute("name","m"+n);
+            inp2.setAttribute("name", "t" + n);
+            inp3.setAttribute("name", "e" + n);
+            inp1.setAttribute("class", "form-control input-bg");
+            inp2.setAttribute("class", "form-control input-bg");
+            inp3.setAttribute("class", "form-control input-bg");
+            
+            tb1.append(tr);
+            tr.append(td1);
+            tr.append(td2);
+            tr.append(td3);
+            tr.append(td4);
+            td2.append(inp1);
+            td3.append(inp2);
+            td4.append(inp3);
+        }
+
+        function addpdf(){
+            var dm2 = document.getElementById('dm2');
+            var n = parseInt(dm2.value);
+            var tb1 = document.getElementById('tb2');
+            var tr = document.createElement("tr");
+            var td1 = document.createElement("td");
+            var td2 = document.createElement("td");
+            var td3 = document.createElement("td");
+            td1.innerHTML = n + 1;
+            var inp1 = document.createElement("input");
+            var inp2 = document.createElement("input");
+            inp2.setAttribute('type',"file");
+            n++;
+            dm2.setAttribute("value", n);
+            inp1.setAttribute("name", "pdfname" + n);
+            inp2.setAttribute("name", "pdf" + n);
+            inp1.setAttribute("class", "form-control input-bg");
+            inp2.setAttribute("class", "form-control-file input-bg");
+            
+            tb1.append(tr);
+            tr.append(td1);
+            tr.append(td2);
+            tr.append(td3);
+            td2.append(inp1);
+            td3.append(inp2);
+        }
+    </script>
+</body>
+>>>>>>> midhun
+
+</html>

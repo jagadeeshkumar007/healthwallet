@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-btn {
+            background-color: #35b0e9;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .card {
+            width: 300px;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        .card-header {
+            background-color: #343a40;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+        a{
+            text-decoration: none;
+        }
+        #sub{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div>
+            <h1>Admin Dashboard</h1>
+        </div>
+        <button class="logout-btn" onclick="handleLogout()">Logout</a></button>
+    </div>
+<form action="adminlogout" method="POST" id="myfrm">
+    {% csrf_token %}
+    <input id="sub" type="submit" name="submit">
+</form>
+    <div class="container">
+        <a href="{% url 'addHospital' %}">
+        <div class="card">
+            <div class="card-header">
+                <h2>Hospitals</h2>
+            </div>
+            <div class="card-body">
+                <p>Register new hospitals</p>
+            </div>
+        </div>
+        </a>
+        <a href="{% url 'addDiag' %}">
+        <div class="card">
+            <div class="card-header">
+                <h2>Diagnosis Center</h2>
+            </div>
+            <div class="card-body">
+                <p>Add Diagnosis Center.</p>
+            </div>
+        </div>
+        </a>
+        <a href="{% url 'viewStats' %}" >
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Regional Statistics</h2>
+            </div>
+            <div class="card-body">
+                <p>view Reginal statistics here</p>
+            </div>
+        </div>
+        </a>
+    </div>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    
+    <script>
+        // Prevent navigating back to the previous page
+            function handleLogout(){
+                window.localStorage.clear();
+                window.location.reload(true);
+                window.location.replace('/');
+            };
+    </script>
+</body>
+
+</html>

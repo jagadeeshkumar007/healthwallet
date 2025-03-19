@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #pdf-viewer {
+            overflow: auto;
+            /* or 'scroll' if you want to always show the scrollbar */
+            max-height: 100%;
+            /* Set maximum height as per your requirement */
+        }
+    </style>
+</head>
+
+<body>
+   <center> <div id="pdf-viewer"></div></center>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
+    <script>
+        // URL to your PDF file
+        var pdfUrl = '{{ obj.pdf.url }}';
+
+        // PDF.js worker from the built/ folder
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.worker.min.js';
+
+        // Asynchronously download PDF as an ArrayBuffer
+        var loadingTask = pdfjsLib.getDocument(pdfUrl);
+        loadingTask.promise.then(function (pdf) {
+            // Get the number of pages in the PDF
+            var numPages = pdf.numPages;
+
+            // Iterate through all pages
+            for (var pageNum = 1; pageNum <= numPages; pageNum++) {
+                // Fetch the page
+                pdf.getPage(pageNum).then(function (page) {
+                    var scale = 1.5;
+                    var viewport = page.getViewport({ scale: scale });
+
+                    // Prepare canvas using PDF page dimensions
+                    var canvas = document.createElement('canvas');
+                    var context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    // Render PDF page into canvas context
+                    var renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    page.render(renderContext).promise.then(function () {
+                        // Display canvas in div
+                        document.getElementById('pdf-viewer').appendChild(canvas);
+                    });
+                });
+            }
+        }, function (reason) {
+            // PDF loading error
+            console.error(reason);
+        });
+    </script>
+    
+</body>
+
+</html>

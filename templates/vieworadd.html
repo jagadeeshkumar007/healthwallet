@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="shadow p-5">
+            <form method="POST" action="viewpast" class="mb-3">
+                {% csrf_token %}
+                <input type="hidden" name="adno" id="adno" value="{{adno}}">
+                <button type="submit" class="btn btn-primary">View Past</button>
+            </form>
+
+            <form method="POST" action="uploadnew">
+                {% csrf_token %}
+                <input type="hidden" name="hid" id="hid" value="{{hid}}">
+                <input type="hidden" name="hname" id="hname" value="{{hname}}">
+                <input type="hidden" name="pname" id="pname" value="{{pname}}">
+                <input type="hidden" name="adno" id="adno" value="{{adno}}">
+                <button type="submit" class="btn btn-primary">Upload New</button>
+            </form>
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

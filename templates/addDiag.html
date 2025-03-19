@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Diagnostic Center</title>
+    <script>
+        function isValidMobileNumber(mobileNumber) {
+            var cleanedNumber = mobileNumber.replace(/\D/g, ''); // Remove non-numeric characters
+            return /^\d{10}$/.test(cleanedNumber); // Check if it's exactly 10 digits
+        }
+        
+        function isValidEmail(email) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        function validate() {
+            var email = document.getElementById("hmail").value;  // Corrected ID
+            var phone = document.getElementById("hnumber").value; // Corrected ID
+        
+            if (!isValidMobileNumber(phone)) {
+                alert("Invalid phone number. It must be 10 digits.");
+                return false; // Stop form submission
+            }
+        
+            if (!isValidEmail(email)) {
+                alert("Invalid email format.");
+                return false; // Stop form submission
+            }
+        
+            return true; // Form submits successfully
+        }
+        </script>
+        
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: linear-gradient(to top right, white, rgb(0, 255, 251), blue);
+            /* Background color - yellow */
+            color: #023e73;
+            /* Text color - dark blue */
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #f3f3f3;
+            /* Form box background color - light gray */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #023e73;
+            /* Text color inside the form box - dark blue */
+        }
+
+        h2 {
+            color: white;
+            background-color: #023e73;
+            /* Form title color - dark blue */
+            text-align: center;
+            padding: 20px;
+            margin-top: 0%;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            background-color: #d6dfe7;
+            /* Input box color - light gray */
+            border: none;
+            border-radius: 5px;
+            color: #023e73;
+            /* Input text color - dark blue */
+        }
+
+        input[type="submit"],
+        button {
+            background-color: #023e73;
+            /* Button color - dark blue */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #001f3f;
+            /* Button color on hover - darker blue */
+        }
+
+        .dd {
+            align-items: center;
+        }
+        .submit-btn {
+            background-color: #3498db; /* Blue color */
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            display: inline-block; /* Keeps it from taking full width */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .submit-btn:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+        
+        .submit-btn:active {
+            background-color: #2471a3; /* Even darker blue on click */
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <form action="addDiag" method="post" id="frm" onsubmit="return validate()">
+        {% csrf_token %}
+        <h2>Diagnostic Center Registration</h2>
+    
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li style="color: red;" {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    
+        <label for="hid">Diagnostic Center ID:</label>
+        <input type="text" id="hid" name="did" required>
+    
+        <label for="hnumber">Diagnostic Center Number:</label>
+        <input type="number" id="hnumber" name="dnumber" required>
+    
+        <label for="hmail">Email:</label>
+        <input type="email" id="hmail" name="dmail" required>
+    
+        <label for="hname">Diagnostic Center Name:</label>
+        <input type="text" id="hname" name="dname" required>
+    
+        <label for="pincode">Pincode:</label>
+        <input type="text" id="pincode" name="pincode" required>
+    
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required>
+    
+        <label for="dist">District:</label>
+        <input type="text" id="dist" name="dist" required>
+    
+        <label for="Address">Address:</label>
+        <input type="text" id="Address" name="Address" required>
+    
+        <label for="speciality">Speciality:</label>
+        <input type="text" id="speciality" name="speciality" required>
+    
+        <br><br>
+    
+        <!-- Use a button instead of a div -->
+        <button type="submit" class="submit-btn">Submit</button>
+    
+    </form>
+    
+</body>
+
+</html>

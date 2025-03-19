@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <div>
+            <h1>Welcome to {{hname}}</h1>
+            <form method="POST" action="fetchPatient">
+                {% csrf_token %}
+                <input style="display: none;" type="text" name="did" id="did" value="{{did}}">
+                <input style="display: none;" type="text" name="hid" id="hid" value="{{hid}}">
+                <input style="display: none;" type="text" name="hname" id="hname" value="{{hname}}">
+                <label for="aadhaar">Enter aadhaar number here: </label>
+                <input type="text" name="aadhaar" id="aadhaar">
+                <button type="submit">submit</button>
+            </form>
+            <h1><a href="{%url 'patientRegister' %}">Register new user</a></h1>
+        </div>
+    </body>
+
+</html>

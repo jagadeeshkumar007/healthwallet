@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+
+        <form method="POST" action="viewpastD">
+            {% csrf_token %}
+            <input style="display: none;" type="text" name="adno" id="adno" value="{{adno}}">
+            <button type="submit">view past</button>
+        </form>
+
+        <form method="POST" action="uploadnewD">
+            {% csrf_token %}
+            <input style="display: none;" type="text" name="did" id="did" value="{{did}}">
+            <input style="display: none;" type="text" name="dname" id="dname" value="{{dname}}">
+            <input style="display: none;" type="text" name="pname" id="pname" value="{{pname}}">
+            <input style="display: none;" type="text" name="adno" id="adno" value="{{adno}}">
+            <button type="submit">Upload new</button>
+        </form>
+    </body>
+
+</html>
