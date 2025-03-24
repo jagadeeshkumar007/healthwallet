@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: myapp
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn your_project.wsgi:application
+    envVars:
+      - key: django-insecure-=30gv1o%3ye@g3=+&mu6esd@q5s@c)k7sgu=z0-01u3h7nupmw
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: False
