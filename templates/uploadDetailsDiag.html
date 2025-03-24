@@ -46,13 +46,14 @@
                         {% csrf_token %}
 
                         <div class="form-group">
-                            <h3 class="text">Hospitals ID: {{hid}}</h3>
-                            <h3 class="text">Diagnostic center name: {{hname}}</h3>
+                            <h3 class="text">Diagnostic center ID: {{did}}</h3>
+                            <h3 class="text">Diagnostic center name: {{dname}}</h3>
                             <h3 class="text">Patient name: {{pname}}</h3>
+                            <h3 class="text">Patient ID: {{adhno}}</h3>
                             <input type="text" style="display: none;" id="diagnosis" name="hid" maxlength="500"
-                                value="{{hid}}">
+                                value="{{did}}">
                             <input type="text" style="display: none;" id="diagnosis" name="hname" maxlength="500"
-                                value="{{hname}}">
+                                value="{{dname}}">
                             <input type="text" style="display: none;" id="diagnosis" name="pname" maxlength="500"
                                 value="{{pname}}">
                         </div>

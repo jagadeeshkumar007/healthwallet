@@ -105,7 +105,28 @@
     button:hover {
         background-color: #001f3f; /* Button color on hover - darker blue */
     }
+    .sbtn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        border: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        user-select: none;
+      }
     
+      .sbtn:hover {
+        background-color: #0056b3;
+      }
+    
+      .sbtn:active {
+        transform: scale(0.95);
+      }
 </style>
 <body>
     <form action="patientRegister" method="post" id="frm">
@@ -166,7 +187,7 @@
         <label for="pswd">ConfirmPassword:</label><br>
         <input type="password" id="cpswd" name="cpswd" maxlength="500"><br>
 
-        <div onclick="validate()">Submit</div>
+        <div class="sbtn" onclick="validate()" >Submit</div>
     </form>
 </body>
 

@@ -7,13 +7,13 @@
 </head>
 
 <body>
-    <form method="POST" action="addpdf">
+    <form style="display:none" method="POST" action="addpdf">
         {% csrf_token %}
         <input type="text" name="adno" value="{{adno}}">
         <input type="submit" name="submit">
     </form>
     <center>
-        <h2>{{adno}}</h2>
+        <h2>User ID: {{adno}}</h2>
     </center>
     {% for obj in lst%}
     <div class="container-fluid mt-2 d-flex justify-content-center">

@@ -124,6 +124,8 @@ def otpauth(request):
         pname = pobj.pname 
         print(correct_otp, otp)
         if(otp == correct_otp):
+            pobj.otp = ''
+            pobj.save()
             return render(request, "vieworadd.html", {'pname':pname, 'hname':hname, 'hid':hid, 'adno':adno})
         else:
             return redirect(hospitalLogin)
@@ -145,7 +147,9 @@ def otpauthD(request):
         pname = pobj.pname
         print(correct_otp, otp)
         if(otp == correct_otp):
-            return render(request, "uploadDetailsDiag.html", {'pname':pname, 'dname':dname, 'did':did})
+            pobj.otp = ''
+            pobj.save()
+            return render(request, "uploadDetailsDiag.html", {'pname':pname, 'dname':dname, 'did':did,'adhno':adno})
         else:
             return redirect(diaglogin)
 
@@ -236,6 +240,7 @@ def setDpswd(request):
             obj.save()
             return redirect('home')
         return render(request,'setDpswd.html',{"did":did1})
+    return render(request,'setDpswd.html')
 import re
 def addHospital(request):
     if request.method=="POST":
@@ -386,19 +391,37 @@ def map(request):
         # Enter the pin code
         pincode = request.POST['pin']  # Example pin code for Buckingham Palace
         alob = Hospital.objects.filter(pincode=pincode).values()
-        district = alob[0]['dist']
-        print(district)
-        disobj = Hospital.objects.filter(dist=district).values()
+        dlob = DiagCenter.objects.filter(pincode=pincode).values()
         # loc = geolocator.geocode(pincode)
-        mymap=folium.Map(location=[0,0],zoom_start=9)
-        for i in disobj:
-            try:
-                latt,logg = coord(urllib.parse.quote(i['Address']))
-                if(latt is None or logg is None):
+        mymap=folium.Map(location=[20.5937, 78.9629], zoom_start=7)
+        try:
+            district = alob[0]['dist']
+            disobj = Hospital.objects.filter(dist=district).values()
+            # print("d1",disobj)
+            for i in disobj:
+                try:
+                    latt,logg = coord(urllib.parse.quote(i['Address']))
+                    if(latt is None or logg is None):
+                        continue
+                except:
                     continue
-            except:
-                continue
-            folium.Marker([latt,logg],popup="myloc",tooltip=i['hname']).add_to(mymap)
+                folium.Marker([latt,logg],popup="myloc",tooltip=i['hname']).add_to(mymap)
+        except Exception:
+            pass
+        try:
+            district1 = dlob[0]['dist']        
+            disobj1 = DiagCenter.objects.filter(dist=district1).values()
+            # print(disobj1)
+            for i in disobj1:
+                try:
+                    latt,logg = coord(urllib.parse.quote(i['Address']))
+                    if(latt is None or logg is None):
+                        continue
+                except:
+                    continue
+                folium.Marker([latt,logg],popup="myloc",tooltip=i['dcname']).add_to(mymap)
+        except:
+            pass
         folium_map_html = mymap._repr_html_()  
         return render(request,"map.html",{"folium_map_html": folium_map_html})
     return render(request, "enterpin.html")
@@ -713,7 +736,7 @@ def showStats(request):
     df1 = pd.DataFrame(allpat)
     diseases = df['disease'].unique() #unique diseases
     # print(diseases)
-    state = "Andhrapradesh"
+    state = "Andhra Pradesh"
     dfs = df1[df1['state']==state]
     districts = list(dfs['dist'].unique()) # unique districts
     print(districts)
