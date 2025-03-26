@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=30gv1o%3ye@g3=+&mu6esd@q5s@c)k7sgu=z0-01u3h7nupmw'
+#SECRET_KEY = 'django-insecure-=30gv1o%3ye@g3=+&mu6esd@q5s@c)k7sgu=z0-01u3h7nupmw'
+
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG","False").lower()=="true"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -74,20 +76,23 @@ WSGI_APPLICATION = 'medicalProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql', 
-#         'NAME': 'Healthwallet',
-#         'USER': 'root',
-#         'PASSWORD': '21a81a05n1',
-#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-#         'PORT': '3306',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': 'Healthwallet',
+        'USER': 'root',
+        'PASSWORD': '21a81a05n1',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+    }
+}
 
 import dj_database_url
+
+database_url = os.environ.get("DATABASE_URL")
 DATABASES={
-   'default':dj_database_url.parse("postgresql://healthwallet_ig3q_user:QgYQVTSnabeIUz4gN1qiFXNoPAweOskr@dpg-cvgocqtrie7s73cn4p5g-a.oregon-postgres.render.com/healthwallet_ig3q")
+#    'default':dj_database_url.parse("postgresql://healthwallet_ig3q_user:QgYQVTSnabeIUz4gN1qiFXNoPAweOskr@dpg-cvgocqtrie7s73cn4p5g-a.oregon-postgres.render.com/healthwallet_ig3q")
+     'default':dj_database_url.parse(database_url)
 }
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
