@@ -683,8 +683,8 @@ def patientLogin(request):
                 l1.append(pres)
                 l1.append(pd)
                 lst.append(l1)
-                print(pres)
-            print(lst)
+                # print(pres)
+            # print(lst)
             return render(request,"patientHome1.html",{"lst":lst,"adno":pid})
     return render(request,'patientlogin.html')
 from django.http import HttpResponseRedirect
@@ -711,7 +711,7 @@ def viewpast(request):
         l1.append(pres)
         l1.append(pd)
         lst.append(l1)
-        print(pres)
+        # print(pres)
 
     return render(request,"displayDetails.html",{"lst":lst,"adno":adno})
 
