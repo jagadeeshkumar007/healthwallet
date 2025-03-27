@@ -686,7 +686,7 @@ def patientLogin(request):
                 print(pres)
             print(lst)
             return render(request,"patientHome1.html",{"lst":lst,"adno":pid})
-    return render(request,'patientLogin.html')
+    return render(request,'patientlogin.html')
 from django.http import HttpResponseRedirect
 def adminlogout(request):
     # logout(request)
