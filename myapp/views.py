@@ -270,8 +270,8 @@ def addHospital(request):
 
        obj=Hospital.objects.create(hid=hid,hmail=mail,hname=hname,pincode=pincode,state=state,dist=dist,Address=Address,speciality=speciality,hnumber=hnumber)
        obj.save()
-       name="sushma"
-       '''subject="it's me, SUSHMA"
+       name="Krishna"
+       '''subject="it's me, Krishna"
         msg="hello, HOw are you? I hope you all fine."
         rl=['suahmakurella@gmail.com']
         send_mail(subject,msg,EMAIL_HOST_USER,rl,fail_silently=False)'''
@@ -297,7 +297,7 @@ def addHospital(request):
 
        """s = smtplib.SMTP(xxx, 25)
        s.setpassword(xxx, xxx, msg.as_string())
-       message = "hello this is sushma. and this is an automated gmail message."
+       message = "hello this is Krishna. and this is an automated gmail message."
        """
         # sending the mail
        s.sendmail("sushmadilakshmikurella@gmail.com",mail, msg+m)
@@ -333,8 +333,8 @@ def addDiag(request):
            return redirect(addDiag)
        obj=DiagCenter.objects.create(dcid=did,dnumber=dnumber,dcname = dname, pincode = pincode, state = state, dist = dist, Address = Address, dmail = mail)
        obj.save()
-       name="sushma"
-       '''subject="it's me, SUSHMA"
+       name="Krishna"
+       '''subject="it's me, Krishna"
         msg="hello, HOw are you? I hope you all fine."
         rl=['suahmakurella@gmail.com']
         send_mail(subject,msg,EMAIL_HOST_USER,rl,fail_silently=False)'''
@@ -435,7 +435,7 @@ def patientRegister(request):
         pname = request.POST['pname']
         pincode = request.POST['pincode']
         state = request.POST['state']
-        dist = request.POST['dist']
+        dist = request.POST['dist'].lower()
         Address = request.POST['Address']
         gender = request.POST['gender']
         dob = request.POST['dob']
@@ -479,7 +479,7 @@ def patientRegister(request):
             emial=email
         )
         obj.save();
-        name="sushma"
+        name="Krishna"
        
         s = smtplib.SMTP('smtp.gmail.com', 587)
 
@@ -737,6 +737,10 @@ def showStats(request):
     diseases = df['disease'].unique() #unique diseases
     # print(diseases)
     state = "Andhra Pradesh"
+    if(request.method=="POST"):
+        state = request.POST['state']
+        print(state,"sss")
+    # state = request['state']
     dfs = df1[df1['state']==state]
     districts = list(dfs['dist'].unique()) # unique districts
     print(districts)

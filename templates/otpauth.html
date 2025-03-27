@@ -1,66 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>OTP Form</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f5f5f5;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-            .container {
-                max-width: 400px;
-                margin: 50px auto;
-                padding: 20px;
-                background-color: #fff;
-                border-radius: 5px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+        }
 
-            label {
-                display: block;
-                margin-bottom: 10px;
-            }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 350px;
+        }
 
-            input[type="text"] {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 15px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-            }
+        .container h2 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
 
-            button {
-                padding: 10px 20px;
-                background-color: #007bff;
-                color: #fff;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-            }
+        label {
+            display: block;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
 
-            button:hover {
-                background-color: #0056b3;
-            }
-        </style>
-    </head>
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            margin-bottom: 20px;
+            font-size: 16px;
+            text-align: center;
+        }
 
-    <body>
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #00c6ff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0072ff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>OTP Verification</h2>
         <form method="POST" action="otpauth">
             {% csrf_token %}
-            <input style="display: none;" type="text" name="hname" id="hname" value="{{hname}}">
-            <input style="display: none;" type="text" name="hid" id="hid" value="{{hid}}">
-            <input style="display: none;" type="text" name="adno" id="adno" value="{{adno}}">
-            <label for="otp">Enter your OTP here: </label>
-            <input type="text" name="otp" id="otp">
-            <button type="submit">submit</button>
+            <input type="hidden" name="hname" id="hname" value="{{hname}}">
+            <input type="hidden" name="hid" id="hid" value="{{hid}}">
+            <input type="hidden" name="adno" id="adno" value="{{adno}}">
+            <label for="otp">Enter your OTP here:</label>
+            <input type="text" name="otp" id="otp" placeholder="123456" required>
+            <br>
+            <button type="submit">Submit</button>
         </form>
-    </body>
+    </div>
+</body>
 
 </html>

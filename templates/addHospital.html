@@ -1,191 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Hospital</title>
-        <script>
-            function isValidMobileNumber(mobileNumber) {
-                // Remove any non-numeric characters
-                var cleanedNumber = mobileNumber.replace(/\D/g, '');
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 145vh;
+            background: linear-gradient(to right, #6dd5ed, #2193b0);
+        }
 
-                // Check if the cleaned number is a valid format
-                // In this example, we are checking for a 10-digit number
-                if (/^\d{10}$/.test(cleanedNumber)) {
-                    // Additional checks can be added based on specific requirements
-                    return true;
-                }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
 
-                return false;
-            }
+        h2 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 20px;
+        }
 
-            // Example usage
+        label {
+            color: #fff;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
 
-            function isValidEmail(email) {
-                // Regular expression for basic email validation
-                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return emailRegex.test(email);
-            }
-            function validate() {
-                var hmail = document.getElementById("hmail").value;
-                var frm = document.getElementById("frm");
-                var hn=document.getElementById("hnumber").value;
-                if(hn.length==10){
-                    if(isValidEmail(hmail)){ frm.submit(); }
-                    else{
-                        alert("invalid email id");
-                    }
-                    
-                }
-                else{
-                    alert("invalid phone number");
-                }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #251f1f;
+            outline: none;
+        }
 
+        ::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
 
-            }
+        .submit-btn {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
 
-            // Example usage
+        .submit-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <form class="container" action="addHospital" method="post" id="frm">
+        {% csrf_token %}
+        <h2>Hospital Registration</h2>
 
-        </script>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 20px;
-                background-color: #35b0e9;
-                /* Background color - yellow */
-                color: #023e73;
-                /* Text color - dark blue */
-            }
+        <label for="hid">Hospital ID:</label>
+        <input type="text" id="hid" name="hid" required placeholder="Enter Hospital ID">
 
-            form {
-                max-width: 600px;
-                margin: 0 auto;
-                background-color: #f3f3f3;
-                /* Form box background color - light gray */
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                color: #023e73;
-                /* Text color inside the form box - dark blue */
-            }
+        <label for="hnumber">Hospital Number:</label>
+        <input type="number" id="hnumber" name="hnumber" required placeholder="Enter Contact Number">
 
-            h2 {
-                color: white;
-                background-color: #023e73;
-                /* Form title color - dark blue */
-                text-align: center;
-                padding: 20px;
-                margin-top: 0%;
-                border-radius: 5px;
-            }
+        <label for="hmail">Email:</label>
+        <input type="email" id="hmail" name="hmail" required placeholder="Enter Email">
 
-            label {
-                display: block;
-                margin-top: 10px;
-            }
+        <label for="hname">Hospital Name:</label>
+        <input type="text" id="hname" name="hname" required placeholder="Enter Hospital Name">
 
-            input,
-            select {
-                width: 100%;
-                padding: 8px;
-                margin-top: 5px;
-                box-sizing: border-box;
-                background-color: #d6dfe7;
-                /* Input box color - light gray */
-                border: none;
-                border-radius: 5px;
-                color: #023e73;
-                /* Input text color - dark blue */
-            }
+        <label for="pincode">Pincode:</label>
+        <input type="text" id="pincode" name="pincode" required placeholder="Enter Pincode">
 
-            input[type="submit"],
-            button {
-                background-color: #023e73;
-                /* Button color - dark blue */
-                color: white;
-                padding: 10px 15px;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                margin-top: 10px;
-            }
+        <label for="state">State:</label>
+        <select id="state" name="state" required>
+            <option value="">Select State</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+            <option value="Chandigarh">Chandigarh</option>
+            <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Lakshadweep">Lakshadweep</option>
+            <option value="Puducherry">Puducherry</option>
+        </select>
 
-            button:hover {
-                background-color: #001f3f;
-                /* Button color on hover - darker blue */
-            }
+        <label for="dist">District:</label>
+        <input type="text" id="dist" name="dist" required placeholder="Enter District">
 
-            .dd {
-                align-items: center;
-            }
-            .sbtn {
-                display: inline-block;
-                padding: 10px 20px;
-                background-color: #007bff;
-                color: white;
-                font-size: 16px;
-                font-weight: bold;
-                border-radius: 5px;
-                cursor: pointer;
-                text-align: center;
-                border: none;
-                transition: background-color 0.3s ease, transform 0.2s ease;
-                user-select: none;
-              }
-            
-              .sbtn:hover {
-                background-color: #0056b3;
-              }
-            
-              .sbtn:active {
-                transform: scale(0.95);
-              }
-        </style>
-    </head>
+        <label for="Address">Address:</label>
+        <input type="text" id="Address" name="Address" required placeholder="Enter Address">
 
-    <body>
+        <label for="speciality">Speciality:</label>
+        <input type="text" id="speciality" name="speciality" required placeholder="Enter Speciality">
 
-        <form action="addHospital" method="post" id="frm">
-            {% csrf_token %}
-            <h2>Hospital Registration</h2>
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li style="color: red;" {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            <label for="hid">Hospital ID:</label><br>
-            <input type="text" id="hid" name="hid" required><br>
-
-            <label for="hnumber">hospital number:</label><br>
-            <input type="number" id="hnumber" name="hnumber" required><br>
-
-            <label for="hmail">Email:</label><br>
-            <input type="email" id="hmail" name="hmail" required><br>
-
-            <label for="hname">Hospital Name:</label><br>
-            <input type="text" id="hname" name="hname" required><br>
-
-            <label for="pincode">Pincode:</label><br>
-            <input type="text" id="pincode" name="pincode" required><br>
-
-            <label for="state">State:</label><br>
-            <input type="text" id="state" name="state" required><br>
-
-            <label for="dist">District:</label><br>
-            <input type="text" id="dist" name="dist" required><br>
-
-            <label for="Address">Address:</label><br>
-            <input type="text" id="Address" name="Address" required><br>
-
-            <label for="speciality">Speciality:</label><br>
-            <input type="text" id="speciality" name="speciality" required><br><br>
-            <div class="sbtn" onclick="validate()"> Submit</div>
-
-            <!-- <input type="submit" value="Submit"> -->
-        </form>
-    </body>
-
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+</body>
 </html>

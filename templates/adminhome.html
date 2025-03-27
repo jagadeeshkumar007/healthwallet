@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         body {
@@ -18,10 +17,14 @@
         .navbar {
             background-color: #343a40;
             color: white;
-            padding: 15px;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logout-btn {
@@ -29,108 +32,241 @@
             border: none;
             color: white;
             padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
             font-size: 16px;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #1b8ac4;
         }
 
         .container {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             flex-wrap: wrap;
-            padding: 20px;
+            padding: 40px;
         }
 
         .card {
-            width: 300px;
-            margin: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            width: 320px;
+            margin: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
             overflow: hidden;
             background-color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
 
         .card-header {
             background-color: #343a40;
             color: white;
-            padding: 10px;
+            padding: 15px;
             text-align: center;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .card-body {
             padding: 20px;
+            text-align: center;
+            font-size: 16px;
+            color: #555;
         }
-        a{
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        a:hover {
             text-decoration: none;
         }
-        #sub{
+
+        #sub {
             display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card {
+                width: 90%;
+            }
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            .logout-btn {
+                margin-top: 10px;
+            }
+/* Select Container */
+.select-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #343a40;
+}
+
+/* Styled Select Dropdown */
+select {
+    width: 100%;
+    max-width: 350px;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #35b0e9;
+    border-radius: 8px;
+    background: linear-gradient(to right, #ffffff, #f8f9fa);
+    color: #343a40;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    font-weight: bold;
+}
+
+/* Hover Effect */
+select:hover {
+    border-color: #1b8ac4;
+    background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+}
+
+/* Focus Effect */
+select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+/* Dropdown Arrow Customization */
+.select-container {
+    position: relative;
+    display: inline-block;
+}
+
+.select-container::after {
+    content: '▼';
+    font-size: 14px;
+    color: #343a40;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Remove default dropdown arrow */
+select::-ms-expand {
+    display: none;
+}
+
         }
     </style>
 </head>
 
 <body>
-
     <div class="navbar">
         <div>
             <h1>Admin Dashboard</h1>
         </div>
-        <button class="logout-btn" onclick="handleLogout()">Logout</a></button>
+        <button class="logout-btn" onclick="handleLogout()">Logout</button>
     </div>
-<form action="adminlogout" method="POST" id="myfrm">
-    {% csrf_token %}
-    <input id="sub" type="submit" name="submit">
-</form>
+
+    <form action="adminlogout" method="POST" id="myfrm">
+        {% csrf_token %}
+        <input id="sub" type="submit" name="submit">
+    </form>
+
     <div class="container">
         <a href="{% url 'addHospital' %}">
-        <div class="card">
-            <div class="card-header">
-                <h2>Hospitals</h2>
+            <div class="card">
+                <div class="card-header">
+                    <h2>Hospitals</h2>
+                </div>
+                <div class="card-body">
+                    <p>Register new hospitals</p>
+                </div>
             </div>
-            <div class="card-body">
-                <p>Register new hospitals</p>
-            </div>
-        </div>
         </a>
-        <a href="{% url 'addDiag' %}">
-        <div class="card">
-            <div class="card-header">
-                <h2>Diagnosis Center</h2>
-            </div>
-            <div class="card-body">
-                <p>Add Diagnosis Center.</p>
-            </div>
-        </div>
-        </a>
-        <a href="{% url 'viewStats' %}" >
 
-        <div class="card">
-            <div class="card-header">
-                <h2>Regional Statistics</h2>
+        <a href="{% url 'addDiag' %}">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Diagnosis Center</h2>
+                </div>
+                <div class="card-body">
+                    <p>Add Diagnosis Center</p>
+                </div>
             </div>
-            <div class="card-body">
-                <p>view Reginal statistics here</p>
-            </div>
-        </div>
         </a>
+
+        <form action="{% url 'viewStats' %}" method="POST">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-header">
+                    <h2>Regional Statistics</h2>
+                </div>
+                <div class="card-body">
+                    <label for="state-select">Select State:</label>
+                    <select id="state-select" name="state">
+                        <option value="Andhra Pradesh" selected>Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Odisha">Odisha</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+                        <option value="West Bengal">West Bengal</option>
+                    </select>
+                    <br><br>
+                    <button type="submit" class="logout-btn">View Stats</button>
+                </div>
+            </div>
+        </form>
     </div>
 
-    <!-- Include Bootstrap JS and Popper.js -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    
     <script>
-        // Prevent navigating back to the previous page
-            function handleLogout(){
-                window.localStorage.clear();
-                window.location.reload(true);
-                window.location.replace('/');
-            };
+        function handleLogout() {
+            window.localStorage.clear();
+            window.location.reload(true);
+            window.location.replace('/');
+        }
     </script>
 </body>
-
 </html>

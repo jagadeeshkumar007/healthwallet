@@ -4,203 +4,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Diagnostic Center</title>
-    <script>
-        function isValidMobileNumber(mobileNumber) {
-            var cleanedNumber = mobileNumber.replace(/\D/g, ''); // Remove non-numeric characters
-            return /^\d{10}$/.test(cleanedNumber); // Check if it's exactly 10 digits
-        }
-        
-        function isValidEmail(email) {
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-        
-        function validate() {
-            var email = document.getElementById("hmail").value;  // Corrected ID
-            var phone = document.getElementById("hnumber").value; // Corrected ID
-        
-            if (!isValidMobileNumber(phone)) {
-                alert("Invalid phone number. It must be 10 digits.");
-                return false; // Stop form submission
-            }
-        
-            if (!isValidEmail(email)) {
-                alert("Invalid email format.");
-                return false; // Stop form submission
-            }
-        
-            return true; // Form submits successfully
-        }
-        </script>
-        
+    <title>Diagnostic Center Registration</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background: linear-gradient(to top right, white, rgb(0, 255, 251), blue);
-            /* Background color - yellow */
-            color: #023e73;
-            /* Text color - dark blue */
+            background: linear-gradient(to top right, #ffffff, #00fff3, #007bff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
 
-        form {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #f3f3f3;
-            /* Form box background color - light gray */
-            padding: 20px;
+        .form-container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            color: #023e73;
-            /* Text color inside the form box - dark blue */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
         }
 
         h2 {
+            text-align: center;
             color: white;
             background-color: #023e73;
-            /* Form title color - dark blue */
-            text-align: center;
-            padding: 20px;
-            margin-top: 0%;
-            border-radius: 5px;
+            padding: 15px;
+            border-radius: 8px;
         }
 
         label {
-            display: block;
-            margin-top: 10px;
+            font-weight: bold;
+            color: #023e73;
         }
 
         input,
         select {
+            background-color: #e3f2fd;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
             width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            box-sizing: border-box;
-            background-color: #d6dfe7;
-            /* Input box color - light gray */
-            border: none;
-            border-radius: 5px;
-            color: #023e73;
-            /* Input text color - dark blue */
         }
 
-        input[type="submit"],
-        button {
-            background-color: #023e73;
-            /* Button color - dark blue */
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: #001f3f;
-            /* Button color on hover - darker blue */
-        }
-
-        .dd {
-            align-items: center;
-        }
         .submit-btn {
-            background-color: #3498db; /* Blue color */
-            color: white;
-            text-align: center;
-            padding: 12px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            display: inline-block; /* Keeps it from taking full width */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .submit-btn:hover {
-            background-color: #2980b9; /* Darker blue on hover */
-            transform: translateY(-2px); /* Slight lift effect */
-        }
-        
-        .submit-btn:active {
-            background-color: #2471a3; /* Even darker blue on click */
-            transform: translateY(1px);
-        }
-        .sbtn {
-            display: inline-block;
-            padding: 10px 20px;
             background-color: #007bff;
             color: white;
+            padding: 12px;
             font-size: 16px;
             font-weight: bold;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
             border: none;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            user-select: none;
-          }
-        
-          .sbtn:hover {
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
             background-color: #0056b3;
-          }
-        
-          .sbtn:active {
-            transform: scale(0.95);
-          }
+        }
     </style>
 </head>
 
 <body>
-
-    <form action="addDiag" method="post" id="frm" onsubmit="return validate()">
+    <form action="addDiag" method="post" class="form-container" onsubmit="return validate()">
         {% csrf_token %}
         <h2>Diagnostic Center Registration</h2>
-    
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li style="color: red;" {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    
+        
         <label for="hid">Diagnostic Center ID:</label>
         <input type="text" id="hid" name="did" required>
-    
+
         <label for="hnumber">Diagnostic Center Number:</label>
         <input type="number" id="hnumber" name="dnumber" required>
-    
+
         <label for="hmail">Email:</label>
         <input type="email" id="hmail" name="dmail" required>
-    
+
         <label for="hname">Diagnostic Center Name:</label>
         <input type="text" id="hname" name="dname" required>
-    
+
         <label for="pincode">Pincode:</label>
         <input type="text" id="pincode" name="pincode" required>
-    
+
         <label for="state">State:</label>
-        <input type="text" id="state" name="state" required>
-    
+        <select id="state" name="state" required>
+            <option value="">Select State</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+            <option value="Chandigarh">Chandigarh</option>
+            <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Lakshadweep">Lakshadweep</option>
+            <option value="Puducherry">Puducherry</option>
+        </select>
+
         <label for="dist">District:</label>
         <input type="text" id="dist" name="dist" required>
-    
+
         <label for="Address">Address:</label>
         <input type="text" id="Address" name="Address" required>
-    
+
         <label for="speciality">Speciality:</label>
         <input type="text" id="speciality" name="speciality" required>
-    
-        <br><br>
-    
-        <!-- Use a button instead of a div -->
+
         <button type="submit" class="submit-btn">Submit</button>
-    
     </form>
-    
 </body>
 
 </html>
