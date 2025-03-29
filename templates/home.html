@@ -43,7 +43,7 @@
             top: 0;
             left: 0;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
-
+            z-index: 999;
         }
 
         #header a {
@@ -59,7 +59,6 @@
             align-items: center;
             justify-content: center;
             margin-left: 20px;
-
         }
 
         #header #navbar li {
@@ -86,6 +85,15 @@
             width: 100%;
             border: 1px solid var(--green);
         }
+        
+        #mobile {
+            display: none;
+            align-items: center;
+        }
+        
+        #close {
+            display: none;
+        }
 
         #home {
             background-image: url("https://img.freepik.com/free-photo/young-handsome-physician-medical-robe-with-stethoscope_1303-17818.jpg?size=626&ext=jpg");
@@ -100,7 +108,6 @@
             align-items: flex-start;
             justify-content: center;
             padding: 0 30px;
-
         }
 
         #home h3 {
@@ -121,8 +128,6 @@
             padding: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
             margin-top: 20px;
-
-
         }
 
         #ahome {
@@ -130,7 +135,7 @@
             align-items: flex-start;
             justify-content: center;
             margin-top: 20px;
-
+            flex-wrap: wrap;
         }
 
         #ahome div {
@@ -145,7 +150,6 @@
         }
 
         #ahome div h3 {
-
             font-weight: 2000;
         }
 
@@ -153,7 +157,6 @@
             font-size: 50px;
             text-align: center;
             margin-top: 30px;
-
         }
 
         #services .heading span {
@@ -179,10 +182,6 @@
             margin-right: 20px;
             border-radius: 5px;
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.8);
-
-
-
-
         }
 
         #services .box #ms {
@@ -268,6 +267,114 @@
         .icons:hover {
             box-shadow: 0px 0px 10px green;
         }
+        
+        /* Media Queries for Responsive Design */
+        @media (max-width: 991px) {
+            #header {
+                padding: 20px 30px;
+            }
+            
+            #navbar {
+                padding-top: 30px;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                position: fixed;
+                top: 0;
+                right: -300px;
+                height: 100vh;
+                width: 300px;
+                background-color: #e3e6f3;
+                box-shadow: 0 40px 60px rgba(0,0,0,0.1);
+                transition: 0.3s;
+            }
+            
+            #navbar.active {
+                right: 0px;
+            }
+            
+            #navbar li {
+                margin-bottom: 25px;
+            }
+            
+            #mobile {
+                display: flex;
+                align-items: center;
+            }
+            
+            #mobile i {
+                color: var(--black);
+                font-size: 24px;
+                padding-left: 20px;
+                cursor: pointer;
+            }
+            
+            #close {
+                display: block;
+                position: absolute;
+                top: 30px;
+                left: 30px;
+                color: var(--black);
+                font-size: 24px;
+                cursor: pointer;
+            }
+            
+            #home {
+                background-position: 70% center;
+                padding: 0 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            #header {
+                height: 70px;
+                padding: 10px 20px;
+            }
+            
+            .logo {
+                font-size: 1.5rem !important;
+            }
+            
+            #home h3 {
+                font-size: 40px;
+            }
+            
+            #home h2 {
+                font-size: 24px;
+            }
+            
+            #ahome div {
+                width: 100%;
+                max-width: 300px;
+                margin: 10px auto;
+            }
+        }
+        
+        @media (max-width: 477px) {
+            #header {
+                padding: 10px 15px;
+            }
+            
+            #home h3 {
+                font-size: 30px;
+            }
+            
+            #home h2 {
+                font-size: 20px;
+            }
+            
+            #home {
+                height: 70vh;
+                padding: 0 15px;
+                background-position: 75% center;
+            }
+            
+            #ahome div {
+                height: auto;
+                min-height: 120px;
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 
@@ -278,6 +385,7 @@
                 <b>HealthWallet</b></strong></a>
         <div>
             <ul id="navbar" class="mainright">
+                <li><a href="#" id="close"><i class="fa fa-times"></i></a></li>
                 <li><a href="{% url 'hospitallogin' %}"><b>Hospitals</b></a></li>
                 <li><a href="{% url 'diaglogin' %}"><b>Diagnosis Centers</b></a></li>
                 <!-- <li><a href=""><b>Home</b></a></li> -->
@@ -286,22 +394,19 @@
                 <li><a href="{% url 'adminlogin' %}"><b>Admin</b></a></li>
             </ul>
         </div>
-
-
+        <div id="mobile">
+            <i class="fa fa-bars" id="bar"></i>
+        </div>
     </section>
     <!--header-->
     <!--home-->
     <section id="home">
-
-
         <h3>Don't worry ever again!</h3>
         <h2>A safe and secure databank to store your medical records.</h2>
         <div id="contact"><a href="./contact/contact.html"><strong>Contact us</strong>
                 <span><i class="fa fa-chevron-right"></i></span></a></div>
-
     </section>
     <section id="ahome">
-
         <div class="icons">
             <i class="fa fa-user-md"></i>
             <h3><strong>We secure your data</strong></h3>
@@ -326,6 +431,23 @@
     <p style="display: flex; justify-content: center; margin-top: 50px;">We don't own any copyrights</p>
     <!--home-->
     <script src="https://kit.fontawesome.com/d2c619c2bc.js" crossorigin="anonymous"></script>
+    <script>
+        const bar = document.getElementById('bar');
+        const close = document.getElementById('close');
+        const nav = document.getElementById('navbar');
+        
+        if (bar) {
+            bar.addEventListener('click', () => {
+                nav.classList.add('active');
+            })
+        }
+        
+        if (close) {
+            close.addEventListener('click', () => {
+                nav.classList.remove('active');
+            })
+        }
+    </script>
 </body>
 
 </html>

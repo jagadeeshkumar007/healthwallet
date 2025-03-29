@@ -1,67 +1,92 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Data Visualization</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        // Load Charts and the corechart and barchart packages.
         google.charts.load('current', { 'packages': ['corechart'] });
-
-        // Draw the pie chart and bar chart when Charts is loaded.
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
-            /*data.addColumn('string', 'Topping');
-            data.addColumn('number', 'Slices'); */
             var jsonString = "{{ json_nested_list|escapejs }}";
             var jsonString1 = "{{ json_nested_list1|escapejs }}";
             var nestedList = JSON.parse(jsonString);
             var nestedList1 = JSON.parse(jsonString1);
             var nestedListWithHeader = [['District', 'Count', { role: 'style' }, { role: 'annotation' }]].concat(nestedList);
-            console.log(nestedListWithHeader);
             var nestedListWithHeader1 = [['Disease', 'Count']].concat(nestedList1);
-            console.log(nestedListWithHeader1);
             var data = new google.visualization.arrayToDataTable(nestedListWithHeader);
             var data1 = new google.visualization.arrayToDataTable(nestedListWithHeader1);
+
             var piechart_options = {
-                title: 'Most Common Dieseases in the state',
-                width: 550,
-                height: 500,
-                is3D: true
+                title: 'Most Common Diseases in the State',
+                width: '100%',
+                height: 400,
+                is3D: true,
+                chartArea: { width: '90%', height: '80%' },
+                legend: { position: 'bottom' }
             };
             var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
             piechart.draw(data1, piechart_options);
 
             var barchart_options = {
-                title: 'District wise most common disease',
-                width: 550,
-                height: 500,
-                legend: 'none'
+                title: 'District-wise Most Common Disease',
+                width: '100%',
+                height: 400,
+                legend: 'none',
+                chartArea: { width: '80%', height: '70%' },
+                hAxis: { textStyle: { fontSize: 12 } },
+                vAxis: { textStyle: { fontSize: 12 } }
             };
             var barchart = new google.visualization.BarChart(document.getElementById('barchart_div'));
             barchart.draw(data, barchart_options);
         }
     </script>
     <style>
-        tr {
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            padding: 20px;
+        }
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .chart-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
-            height: 100%;
+            max-width: 600px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
-
 <body>
-    <!--Table and divs that hold the pie charts-->
-    <h1 align="center">{{state}}</h1>
-    <table class="columns" align="center">
-        <tr>
-            <td>
-                <div id="piechart_div" style="border: 1px solid #ccc"></div>
-            </td>
-            <td>
-                <div id="barchart_div" style="border: 1px solid #ccc"></div>
-            </td>
-        </tr>
-    </table>
+    <h1>{{ state }}</h1>
+    <div class="chart-container">
+        <div class="chart-box">
+            <div id="piechart_div"></div>
+        </div>
+        <div class="chart-box">
+            <div id="barchart_div"></div>
+        </div>
+    </div>
 </body>
-
 </html>
